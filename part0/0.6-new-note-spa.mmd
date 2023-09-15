@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant client as User Client
+    participant browser as Web Browser
+    participant server
+
+    client->>browser: Type some text in input form
+    client->>browser: Press save button 
+    browser->>server: Send Http Post /new_note_spa resource
+    Note right of browser: Body payload goes with input text value in content key object
+
+    Note right of browser: The browser renders the notes again updating the DOM tree without reloading the page
+    Note right of browser: The page does not reload because of e.preventDefault() method from onsubmit event handler form
+
+
+    activate server
+    server-->>browser: Response with status code 201
+    Note left of server: The server does not ask for redirect!!
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that validate the status and shows the response in console
